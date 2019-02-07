@@ -1,0 +1,29 @@
+{% extends "layout/layout.html" %}
+
+{% block title %}게시물 수정{% endblock title %}
+
+{% block script %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form action="{% url 'update' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <input type="hidden" name="id" value="{{ data.id }}" readonly>
+        </div>
+        {% for input in form %}
+            <div class="form-group">
+                {{ input }}
+            </div>
+        {% endfor %}
+        <div class="text-right">
+            <button class="btn btn-primary" type="submit">수정</button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

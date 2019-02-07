@@ -1,0 +1,25 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/store">Delivery_site</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <!-- 역순조회 : namespace가 html이라는 앱의 url을 myweb의 urls.py에서 찾아서 그 앱의 urls.py를 조회한 후 index라는 name의 함수를 찾아간다 -->
+            <li><a href="/store">음식점</a></li>
+            <li><a href="/board">게시판</a></li>
+            <li><a href="/basket">장바구니</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+            <!-- 사용자 계정이 활성화 된 상태인가 ? -->
+            <!-- views 에서 request를 보내줄 때 user의 정보도 같이 보내준다 -->
+            {% if user.is_active %}
+                <li><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
+                <li><a href="/account/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            {% else %}
+                <li><a href="/account/join"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/account/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

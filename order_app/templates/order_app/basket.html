@@ -1,0 +1,10 @@
+{% extends "layout/layout.html" %}
+
+{% block title %}장바구니{% endblock %}
+
+{% block content %}
+<div class="container">
+            {{ store }} <br>
+            주문상품 : {{ data.name }} 주문수량 : {{ data.count }} 총 금액 : {{ data.total }} <br>
+</div>
+{% endblock %}

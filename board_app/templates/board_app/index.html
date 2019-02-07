@@ -1,0 +1,79 @@
+{% extends "layout/layout.html" %}
+
+{% block title %}게시판{% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="text-right">
+            <button type="button" class="btn btn-primary"
+            onclick="location.href='{% url 'write' %}'">글쓰기</button>
+        </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>생성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr onclick="location.href='{% url 'detail' item.id %}'">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.author }}</td>
+                    <td>{{ item.view_count }}</td>
+                    <td>{{ item.create_date|date:"Y-m-d" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <!-- Paginator -->
+            <ul class="pagination">
+                {% if data.has_previous %}
+                    <li>
+                        <a href="{% url 'index' %}?page={{ data.number|add:'-1' }}"><</a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
+                        <a><</a>
+                    </li>
+                {% endif %}
+
+                {% for page in page_range %}
+                    {% if data.number == page %}
+                        <li class="active"><a href="{% url 'index' %}?page={{ page }}">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'index' %}?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if data.has_next %}
+                    <li>
+                        <a href="{% url 'index' %}?page={{ data.number|add:'1' }}">></a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
+                        <a>></a>
+                    </li>
+                {% endif %}
+            </ul>
+    </div>
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-inline text-right">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search" value="{{ search }}" placeholder="검색">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

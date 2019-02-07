@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>회원 가입</title>
+    {% block script %}
+        <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+<body>
+    <form action="{% url 'join' %}" method="POST">
+        {% csrf_token %}
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h4>회원 가입</h4>
+            </div>
+        </div>
+        <!-- username, password, email, first_name, last_name 은 실제 장고 사용자 테이블에서 사용하는 컬럼명 -->
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="text" name="username" placeholder="username" class="form-control" value="{{ username.0 }}" required>
+                <!-- username 에러시 alert 발생 -->
+                {% if username_error %}
+                    <div class="alert alert danger">
+                        <strong>{{ username_error }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password_check" placeholder="password check" class="form-control">
+                <!-- password check 에러시 alert 발생 -->
+                {% if password_error %}
+                    <div class="alert alert danger">
+                        <strong>{{ password_error }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+            <!--
+            <div class="form-group">
+                <input type="text" name="address" placeholder="Address" class="form-control" value="{{ address.0 }}">
+            </div>
+            -->
+            <div class="form-group">
+                <input type="text" name="email" placeholder="E-mail" class="form-control" value="{{ email.0 }}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="first_name" placeholder="First Name" class="form-control" value="{{ first_name.0 }}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="last_name" placeholder="Last Name" class="form-control" value="{{ last_name.0 }}">
+            </div>
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-success">가입</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>메뉴 상세</title>
+</head>
+<body>
+    <div>
+        <form action="{% url 'basket' %}" method="POST">
+            {% csrf_token %}
+            {% for menu in data %}
+            <img width="300" height="300" src="{{ menu.img.url }}"><br> {{menu.name}} - {{ menu.price }} <br>
+            수량을 선택해 주세요.
+            <div class="form-group">
+                <input type="text" name="count" placeholder="수량" class="form-control" value="{{ count }}">
+            </div>
+            <div>
+                <input type="hidden" name="store" value="{{ store.id }}">
+            </div>
+            <div>
+                <input type="hidden" name="menu" value="{{ menu }}">
+            </div>
+            <div>
+                <input type="hidden" name="name" value="{{ menu.name }}">
+            </div>
+            <div>
+                <input type="hidden" name="price" value="{{ menu.price }}">
+            </div>
+            <button type="submit" class="btn btn-primary">장바구니 담기</button>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>
